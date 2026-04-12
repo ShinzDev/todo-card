@@ -1,0 +1,389 @@
+/* ========================================
+   TodoCard Component Styles
+   ======================================== */
+
+.todo-card {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
+  animation: fadeInUp var(--duration-slow) var(--ease-out) both;
+  overflow: hidden;
+}
+
+.todo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(124, 92, 252, 0.4),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.todo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--border-default);
+}
+
+.todo-card:hover::before {
+  opacity: 1;
+}
+
+.todo-card.completed {
+  opacity: 0.7;
+}
+
+.todo-card.completed .todo-card__title {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+}
+
+/* ---- Header Row ---- */
+.todo-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+/* ---- Checkbox ---- */
+.todo-card__checkbox-wrapper {
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.todo-card__checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-spring);
+  position: relative;
+}
+
+.todo-card__checkbox:hover {
+  border-color: var(--accent-light);
+  transform: scale(1.1);
+}
+
+.todo-card__checkbox:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.todo-card__checkbox:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.todo-card__checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  animation: checkmark var(--duration-normal) var(--ease-spring);
+}
+
+/* ---- Title & Meta ---- */
+.todo-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.todo-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+  transition: color var(--duration-normal) var(--ease-out);
+  margin: 0;
+}
+
+/* ---- Priority Badge ---- */
+.todo-card__priority {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.todo-card__priority--high {
+  color: var(--priority-high);
+  background: var(--priority-high-bg);
+  border: 1px solid var(--priority-high-border);
+}
+
+.todo-card__priority--medium {
+  color: var(--priority-medium);
+  background: var(--priority-medium-bg);
+  border: 1px solid var(--priority-medium-border);
+}
+
+.todo-card__priority--low {
+  color: var(--priority-low);
+  background: var(--priority-low-bg);
+  border: 1px solid var(--priority-low-border);
+}
+
+/* ---- Description ---- */
+.todo-card__description {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- Meta Row (Date, Time, Status) ---- */
+.todo-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.todo-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.todo-card__meta-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.todo-card__due-date {
+  color: var(--text-secondary);
+}
+
+.todo-card__time-remaining {
+  color: var(--text-secondary);
+}
+
+.todo-card__time-remaining--overdue {
+  color: var(--priority-high);
+}
+
+.todo-card__time-remaining--soon {
+  color: var(--priority-medium);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ---- Status Badge ---- */
+.todo-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.todo-card__status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.todo-card__status--pending {
+  color: var(--status-pending);
+  background: var(--status-pending-bg);
+}
+.todo-card__status--pending .todo-card__status-dot {
+  background: var(--status-pending);
+}
+
+.todo-card__status--in-progress {
+  color: var(--status-progress);
+  background: var(--status-progress-bg);
+}
+.todo-card__status--in-progress .todo-card__status-dot {
+  background: var(--status-progress);
+}
+
+.todo-card__status--completed {
+  color: var(--status-completed);
+  background: var(--status-completed-bg);
+}
+.todo-card__status--completed .todo-card__status-dot {
+  background: var(--status-completed);
+}
+
+.todo-card__status--overdue {
+  color: var(--status-overdue);
+  background: var(--status-overdue-bg);
+}
+.todo-card__status--overdue .todo-card__status-dot {
+  background: var(--status-overdue);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ---- Tags ---- */
+.todo-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+
+.todo-card__tag {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--accent-light);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-spring);
+  cursor: default;
+  line-height: 1.4;
+}
+
+.todo-card__tag:hover {
+  background: rgba(124, 92, 252, 0.2);
+  transform: translateY(-1px);
+}
+
+/* ---- Divider ---- */
+.todo-card__divider {
+  border: none;
+  height: 1px;
+  background: var(--border-subtle);
+  margin: 0 0 16px;
+}
+
+/* ---- Actions Row ---- */
+.todo-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.todo-card__action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-spring);
+}
+
+.todo-card__action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.todo-card__action-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border-color: var(--border-default);
+  transform: translateY(-1px);
+}
+
+.todo-card__action-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.todo-card__action-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.todo-card__action-btn--edit:hover {
+  color: var(--accent-light);
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
+.todo-card__action-btn--delete:hover {
+  color: var(--priority-high);
+  border-color: var(--priority-high-border);
+  background: var(--priority-high-bg);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+  .todo-card {
+    padding: 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .todo-card__meta {
+    gap: 10px;
+  }
+
+  .todo-card__actions {
+    flex-wrap: wrap;
+  }
+}
